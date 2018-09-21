@@ -1,0 +1,191 @@
+unit __c2_dsPIC33_GPIO;
+uses __t_DSPIC;
+
+function  _getAN_1  () : uint8_t;
+function  _getRST_1 () : uint8_t;
+function  _getCS_1  () : uint8_t;
+function  _getSCK_1 () : uint8_t;
+function  _getMISO_1() : uint8_t;
+function  _getMOSI_1() : uint8_t;
+function  _getPWM_1 () : uint8_t;
+function  _getINT_1 () : uint8_t;
+function  _getRX_1  () : uint8_t;
+function  _getTX_1  () : uint8_t;
+function  _getSCL_1 () : uint8_t;
+function  _getSDA_1 () : uint8_t;
+procedure _setAN_1  (state: uint8_t);
+procedure _setRST_1 (state: uint8_t);
+procedure _setCS_1  (state: uint8_t);
+procedure _setSCK_1 (state: uint8_t);
+procedure _setMISO_1(state: uint8_t);
+procedure _setMOSI_1(state: uint8_t);
+procedure _setPWM_1 (state: uint8_t);
+procedure _setINT_1 (state: uint8_t);
+procedure _setRX_1  (state: uint8_t);
+procedure _setTX_1  (state: uint8_t);
+procedure _setSCL_1 (state: uint8_t);
+procedure _setSDA_1 (state: uint8_t);
+
+function  _getAN_2  () : uint8_t;    
+function  _getRST_2 () : uint8_t;    
+function  _getCS_2  () : uint8_t;    
+function  _getSCK_2 () : uint8_t;    
+function  _getMISO_2() : uint8_t;    
+function  _getMOSI_2() : uint8_t;    
+function  _getPWM_2 () : uint8_t;    
+function  _getINT_2 () : uint8_t;    
+function  _getRX_2  () : uint8_t;    
+function  _getTX_2  () : uint8_t;    
+function  _getSCL_2 () : uint8_t;    
+function  _getSDA_2 () : uint8_t;    
+procedure _setAN_2  (state: uint8_t);
+procedure _setRST_2 (state: uint8_t);
+procedure _setCS_2  (state: uint8_t);
+procedure _setSCK_2 (state: uint8_t);
+procedure _setMISO_2(state: uint8_t);
+procedure _setMOSI_2(state: uint8_t);
+procedure _setPWM_2 (state: uint8_t);
+procedure _setINT_2 (state: uint8_t);
+procedure _setRX_2  (state: uint8_t);
+procedure _setTX_2  (state: uint8_t);
+procedure _setSCL_2 (state: uint8_t);
+procedure _setSDA_2 (state: uint8_t);
+
+function _gpioInit_1(pin: T_mikrobus_pin; direction: T_gpio_dir) : T_mikrobus_ret;
+function _gpioInit_2(pin: T_mikrobus_pin; direction: T_gpio_dir) : T_mikrobus_ret;
+
+implementation
+
+const _MIKROBUS_ERR_PIN  : byte = 1;                
+
+const _GPIO_INPUT        : byte = 1;
+const _GPIO_OUTPUT       : byte = 0;
+
+const _MIKROBUS_AN_PIN   : byte = 0;
+const _MIKROBUS_RST_PIN  : byte = 1;
+const _MIKROBUS_CS_PIN   : byte = 2;
+const _MIKROBUS_SCK_PIN  : byte = 3;
+const _MIKROBUS_MISO_PIN : byte = 4;
+const _MIKROBUS_MOSI_PIN : byte = 5;
+const _MIKROBUS_PWM_PIN  : byte = 6;
+const _MIKROBUS_INT_PIN  : byte = 7;
+const _MIKROBUS_RX_PIN   : byte = 8;
+const _MIKROBUS_TX_PIN   : byte = 9;
+const _MIKROBUS_SCL_PIN  : byte = 10;
+const _MIKROBUS_SDA_PIN  : byte = 11;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+function  _getAN_1  () : uint8_t;     begin Result := RB5_bit;   end;
+function  _getRST_1 () : uint8_t;     begin Result := RB4_bit;   end;
+function  _getCS_1  () : uint8_t;     begin Result := RB3_bit;   end;
+function  _getSCK_1 () : uint8_t;     begin Result := RF12_bit;  end;
+function  _getMISO_1() : uint8_t;     begin Result := RA1_bit;   end;
+function  _getMOSI_1() : uint8_t;     begin Result := RF13_bit;  end;
+function  _getPWM_1 () : uint8_t;     begin Result := RD6_bit;   end;
+function  _getINT_1 () : uint8_t;     begin Result := RC1_bit;   end;
+function  _getRX_1  () : uint8_t;     begin Result := RE6_bit;   end;
+function  _getTX_1  () : uint8_t;     begin Result := RE5_bit;   end;
+function  _getSCL_1 () : uint8_t;     begin Result := RD10_bit;  end;
+function  _getSDA_1 () : uint8_t;     begin Result := RD9_bit;   end;
+procedure _setAN_1  (state: uint8_t); begin LATB5_bit := state;  end;
+procedure _setRST_1 (state: uint8_t); begin LATB4_bit := state;  end;
+procedure _setCS_1  (state: uint8_t); begin LATB3_bit := state;  end;
+procedure _setSCK_1 (state: uint8_t); begin LATF12_bit := state; end;
+procedure _setMISO_1(state: uint8_t); begin LATA1_bit := state;  end;
+procedure _setMOSI_1(state: uint8_t); begin LATF13_bit := state; end;
+procedure _setPWM_1 (state: uint8_t); begin LATD6_bit := state;  end;
+procedure _setINT_1 (state: uint8_t); begin LATC1_bit := state;  end; 
+procedure _setRX_1  (state: uint8_t); begin LATE6_bit := state;  end;
+procedure _setTX_1  (state: uint8_t); begin LATE5_bit := state;  end;
+procedure _setSCL_1 (state: uint8_t); begin LATD10_bit := state; end;
+procedure _setSDA_1 (state: uint8_t); begin LATD9_bit := state;  end;
+
+function  _getAN_2  () : uint8_t;     begin Result := RB2_bit;   end;
+function  _getRST_2 () : uint8_t;     begin Result := RB1_bit;   end;
+function  _getCS_2  () : uint8_t;     begin Result := RB0_bit;   end;
+function  _getSCK_2 () : uint8_t;     begin Result := RG6_bit;   end;
+function  _getMISO_2() : uint8_t;     begin Result := RG7_bit;   end;
+function  _getMOSI_2() : uint8_t;     begin Result := RG8_bit;   end;
+function  _getPWM_2 () : uint8_t;     begin Result := RD5_bit;   end;
+function  _getINT_2 () : uint8_t;     begin Result := RC2_bit;   end;
+function  _getRX_2  () : uint8_t;     begin Result := RD11_bit;  end;
+function  _getTX_2  () : uint8_t;     begin Result := RD0_bit;   end;
+function  _getSCL_2 () : uint8_t;     begin Result := RD10_bit;  end;
+function  _getSDA_2 () : uint8_t;     begin Result := RD9_bit;   end;
+procedure _setAN_2  (state: uint8_t); begin LATB2_bit := state;  end;
+procedure _setRST_2 (state: uint8_t); begin LATB1_bit := state;  end;
+procedure _setCS_2  (state: uint8_t); begin LATB0_bit := state;  end;
+procedure _setSCK_2 (state: uint8_t); begin LATG6_bit := state;  end;
+procedure _setMISO_2(state: uint8_t); begin LATG7_bit := state;  end;
+procedure _setMOSI_2(state: uint8_t); begin LATG8_bit := state;  end;
+procedure _setPWM_2 (state: uint8_t); begin LATD5_bit := state;  end;
+procedure _setINT_2 (state: uint8_t); begin LATC2_bit := state;  end;
+procedure _setRX_2  (state: uint8_t); begin LATD11_bit := state; end;
+procedure _setTX_2  (state: uint8_t); begin LATD0_bit  := state; end;
+procedure _setSCL_2 (state: uint8_t); begin LATD10_bit := state; end;
+procedure _setSDA_2 (state: uint8_t); begin LATD9_bit  := state; end;
+
+function _gpioInit_1(pin: T_mikrobus_pin; direction: T_gpio_dir) : T_mikrobus_ret;
+begin
+Result := 0;
+    ANSELB.B5 := 0x00;
+    ANSELB.B4 := 0x00;
+    ANSELB.B3 := 0x00;
+    ANSELA.B1 := 0x00;
+    ANSELD.B6 := 0x00;
+    ANSELC.B1 := 0x00;
+    ANSELE.B5 := 0x00;
+    ANSELE.B6 := 0x00;
+    ANSELD.B10 := 0x00;
+    ANSELD.B9 := 0x00;
+    case pin of
+        _MIKROBUS_AN_PIN    : begin TRISB5_bit  := direction;         end;      
+        _MIKROBUS_RST_PIN   : begin TRISB4_bit  := direction;         end;      
+        _MIKROBUS_CS_PIN    : begin TRISB3_bit  := direction;         end;      
+        _MIKROBUS_SCK_PIN   : begin TRISF12_bit := direction;         end;      
+        _MIKROBUS_MISO_PIN  : begin TRISA1_bit  := direction;         end;      
+        _MIKROBUS_MOSI_PIN  : begin TRISF13_bit := direction;         end;      
+        _MIKROBUS_PWM_PIN   : begin TRISD6_bit  := direction;         end;      
+        _MIKROBUS_INT_PIN   : begin TRISC1_bit  := direction;         end;
+        _MIKROBUS_RX_PIN    : begin TRISE6_bit  := direction;         end;      
+        _MIKROBUS_TX_PIN    : begin TRISE5_bit  := direction;         end;      
+        _MIKROBUS_SCL_PIN   : begin TRISD10_bit := direction;         end;      
+        _MIKROBUS_SDA_PIN   : begin TRISD9_bit  := direction;         end      
+    else
+        Result := _MIKROBUS_ERR_PIN;
+    end;
+end;
+
+function _gpioInit_2(pin: T_mikrobus_pin; direction: T_gpio_dir) : T_mikrobus_ret;
+begin
+Result := 0;
+    ANSELB.B2 := 0x00;
+    ANSELB.B1 := 0x00;
+    ANSELB.B0 := 0x00;
+    ANSELG.B6 := 0x00;
+    ANSELG.B7 := 0x00;
+    ANSELG.B8 := 0x00;
+    ANSELD.B5 := 0x00;
+    ANSELC.B2 := 0x00;
+    ANSELD.B10 := 0x00;
+    ANSELD.B9 := 0x00;
+    case pin of
+        _MIKROBUS_AN_PIN    : begin TRISB2_bit  := direction;         end;
+        _MIKROBUS_RST_PIN   : begin TRISB1_bit  := direction;         end;
+        _MIKROBUS_CS_PIN    : begin TRISB0_bit  := direction;         end;
+        _MIKROBUS_SCK_PIN   : begin TRISG6_bit  := direction;         end;
+        _MIKROBUS_MISO_PIN  : begin TRISG7_bit  := direction;         end;
+        _MIKROBUS_MOSI_PIN  : begin TRISG8_bit  := direction;         end;
+        _MIKROBUS_PWM_PIN   : begin TRISD5_bit  := direction;         end;
+        _MIKROBUS_INT_PIN   : begin TRISC2_bit  := direction;         end;
+        _MIKROBUS_RX_PIN    : begin TRISD11_bit := direction;         end;
+        _MIKROBUS_TX_PIN    : begin TRISD0_bit  := direction;         end;
+        _MIKROBUS_SCL_PIN   : begin TRISD10_bit := direction;         end;
+        _MIKROBUS_SDA_PIN   : begin TRISD9_bit  := direction;         end
+    else
+        Result := _MIKROBUS_ERR_PIN;
+    end;
+end;
+
+end.

@@ -1,0 +1,39 @@
+unit __mm_TIVA_SPI;
+uses __t_TIVA;
+
+{$IFDEF ENABLE_SPI}
+function _spiInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _spiInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_SPI  : byte = 3;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_SPI}
+
+function _spiInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    SPI0_Init_Advanced( dword(arg1^), word(arg2^), word(arg3^), @_GPIO_MODULE_SPI0_A245 );
+end;
+
+function _spiInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    SPI0_Init_Advanced( dword(arg1^), word(arg2^), word(arg3^), @_GPIO_MODULE_SPI0_A245 );
+end;
+
+{$ENDIF}
+
+end.

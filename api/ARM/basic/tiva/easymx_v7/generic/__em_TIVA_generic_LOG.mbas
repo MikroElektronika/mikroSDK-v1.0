@@ -1,0 +1,55 @@
+module __em_TIVA_generic_LOG
+include __t_TIVA
+
+#IFDEF ENABLE_LOG THEN
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_init2(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_initUartA(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_initUartB(dim baud as uint32_t) as T_mikrobus_ret
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_LOG          as byte = 6
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_LOG THEN
+
+dim logger as ^T_log_writeFp
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART5_Init(baud)
+    logger = @UART5_Write
+end sub
+sub function _log_init2(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART7_Init(baud)
+    logger = @UART7_Write
+end sub
+
+sub function _log_initUartA(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART2_Init(baud)
+    logger = @UART2_Write
+end sub
+
+sub function _log_initUartB(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART7_Init(baud)
+    logger = @UART7_Write
+end sub
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+    logger( data_^ )
+end sub
+
+#ENDIF
+
+end.

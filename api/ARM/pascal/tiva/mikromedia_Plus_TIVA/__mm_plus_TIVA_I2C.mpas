@@ -1,0 +1,53 @@
+unit __mm_plus_TIVA_I2C;
+uses __t_TIVA;
+
+{$IFDEF ENABLE_I2C}
+function _i2cInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _i2cInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _i2cInit_3(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _i2cInit_4(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_I2C  : byte = 4;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_I2C}
+
+function _i2cInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    I2C2_Init_Advanced( dword(arg1^), @_GPIO_MODULE_I2C2_E45 );
+end;
+
+function _i2cInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    I2C2_Init_Advanced( dword(arg1^), @_GPIO_MODULE_I2C2_E45 );
+end;
+
+function _i2cInit_3(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    I2C2_Init_Advanced( dword(arg1^), @_GPIO_MODULE_I2C2_E45 );
+end;
+
+function _i2cInit_4(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    I2C2_Init_Advanced( dword(arg1^), @_GPIO_MODULE_I2C2_E45 );
+end;
+
+{$ENDIF}
+
+end.

@@ -1,0 +1,47 @@
+unit __LOG;
+uses __t_FT90x;
+
+{$IFDEF ENABLE_LOG}
+function _log_init1(baud: uint32_t) : T_mikrobus_ret;
+function _log_init2(baud: uint32_t) : T_mikrobus_ret;
+function _log_initUart(baud: uint32_t) : T_mikrobus_ret;    
+procedure _log_write(data_: ^uint8_t);
+{$ENDIF}
+
+implementation
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_LOG}
+
+var logger : ^T_log_writeFp;
+
+function _log_init1(baud: uint32_t) : T_mikrobus_ret;
+begin
+    UART2_Init(baud);
+    logger := @UART2_Write;
+Result := 0;
+end;
+
+function _log_init2(baud: uint32_t) : T_mikrobus_ret;
+begin
+    UART2_Init(baud);
+    logger := @UART2_Write;
+Result := 0;
+end;
+
+function _log_initUart(baud: uint32_t) : T_mikrobus_ret;
+begin
+    UART1_Init(baud);
+    logger := @UART1_Write;
+Result := 0;
+end;
+
+procedure _log_write(data_: ^uint8_t);
+begin
+    logger( data_^ );
+end;
+
+{$ENDIF}
+
+end.

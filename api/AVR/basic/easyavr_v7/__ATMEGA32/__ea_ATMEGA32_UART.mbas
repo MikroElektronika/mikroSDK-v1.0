@@ -1,0 +1,60 @@
+module __ea_ATMEGA32_UART
+include __t_AVR
+
+#IFDEF ENABLE_UART THEN
+
+sub function _uartInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+sub function _uartInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+sub function _uartInit_3 (dim cfg as ^const uint32_t) as T_mikrobus_ret 
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_UART          as byte = 5
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_UART THEN
+
+sub function _uartInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret 
+dim arg1, arg2, arg3 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    select case (arg1^)
+        case 4800   UART1_Init_Advanced(4800,  byte(arg2^), byte(arg3^))
+        case 9600   UART1_Init_Advanced(9600,  byte(arg2^), byte(arg3^))
+        case 19200  UART1_Init_Advanced(19200, byte(arg2^), byte(arg3^))
+        case 38400  UART1_Init_Advanced(38400, byte(arg2^), byte(arg3^))
+        case 57600  UART1_Init_Advanced(57600, byte(arg2^), byte(arg3^))
+        case 115200 UART1_Init_Advanced(115200,byte(arg2^), byte(arg3^))
+        case else Result = _MIKROBUS_ERR_UART
+    Result = 0   
+    end select
+end sub
+
+sub function _uartInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    select case (arg1^)
+        case 4800   UART1_Init_Advanced(4800,  byte(arg2^), byte(arg3^))
+        case 9600   UART1_Init_Advanced(9600,  byte(arg2^), byte(arg3^))
+        case 19200  UART1_Init_Advanced(19200, byte(arg2^), byte(arg3^))
+        case 38400  UART1_Init_Advanced(38400, byte(arg2^), byte(arg3^))
+        case 57600  UART1_Init_Advanced(57600, byte(arg2^), byte(arg3^))
+        case 115200 UART1_Init_Advanced(115200,byte(arg2^), byte(arg3^))
+        case else Result = _MIKROBUS_ERR_UART
+    Result = 0    
+    end select
+end sub
+
+sub function _uartInit_3 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+        Result = _MIKROBUS_ERR_UART   
+end sub
+
+#ENDIF
+
+end.

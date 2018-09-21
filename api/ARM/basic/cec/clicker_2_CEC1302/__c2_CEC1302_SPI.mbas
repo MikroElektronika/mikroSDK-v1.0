@@ -1,0 +1,57 @@
+module __c2_CEC1302_SPI
+include __t_CEC
+
+#IFDEF ENABLE_SPI THEN
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+sub function _spiInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+sub function _spiInit_3 (dim cfg as ^const uint32_t) as T_mikrobus_ret 
+sub function _spiInit_4 (dim cfg as ^const uint32_t) as T_mikrobus_ret    
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_SPI          as byte = 3
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_SPI THEN
+
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3 as ^const uint32_t
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    SPI0_Init_Advanced(longword(arg1^), word(arg2^), byte(arg3^))
+    Result = 0   
+end sub
+
+sub function _spiInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3 as ^const uint32_t
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    SPI0_Init_Advanced(longword(arg1^), word(arg2^), byte(arg3^))
+    Result = 0   
+end sub
+
+sub function _spiInit_3 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3 as ^const uint32_t
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    SPI0_Init_Advanced(longword(arg1^), word(arg2^), byte(arg3^))
+    Result = 0   
+end sub
+
+sub function _spiInit_4 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3 as ^const uint32_t
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    SPI0_Init_Advanced(longword(arg1^), word(arg2^), byte(arg3^))
+    Result = 0   
+end sub
+
+#ENDIF
+
+end.

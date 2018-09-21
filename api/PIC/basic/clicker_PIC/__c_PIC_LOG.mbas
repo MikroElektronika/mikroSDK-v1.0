@@ -1,0 +1,48 @@
+module __c_PIC_LOG
+include __t_PIC
+
+#IFDEF ENABLE_LOG THEN
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_LOG          as byte = 6
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_LOG THEN
+
+dim logger as ^T_log_writeFp
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    Unlock_IOLOCK()
+    PPS_Mapping_NoLock(22, _INPUT, _RX2_DT2)
+    PPS_Mapping_NoLock(23, _OUTPUT, _TX2_CK2)
+    Lock_IOLOCK()
+  
+    select case (baud)
+        case 4800   UART_Remappable_Init( 4800 ) 
+        case 9600   UART_Remappable_Init( 9600 ) 
+        case 19200  UART_Remappable_Init( 19200 )
+        case 38400  UART_Remappable_Init( 38400 )
+        case 57600  UART_Remappable_Init( 57600 )
+        case 115200 UART_Remappable_Init( 115200 )
+        case else   UART_Remappable_Init( 9600 ) 
+    end select
+    logger = @UART_Remappable_Write
+end sub
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+    logger( data_^ )
+end sub
+
+#ENDIF
+
+end.

@@ -1,0 +1,69 @@
+module __c2_CEC1702_LOG
+include __t_CEC
+
+#IFDEF ENABLE_LOG THEN
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_init2(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_init3(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_init4(dim baud as uint32_t) as T_mikrobus_ret
+sub function _log_initUart(dim baud as uint32_t) as T_mikrobus_ret
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_LOG          as byte = 6
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_LOG THEN
+
+dim logger as ^T_log_writeFp
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART0_Init_Advanced( baud, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT )
+    logger = @UART0_Write
+end sub
+
+sub function _log_init2(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART0_Init_Advanced( baud, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT )
+    logger = @UART0_Write
+end sub
+
+sub function _log_init3(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART0_Init_Advanced( baud, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT )
+    logger = @UART0_Write
+end sub
+
+sub function _log_init4(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART0_Init_Advanced( baud, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT )
+    logger = @UART0_Write
+end sub
+
+sub function _log_initUart(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    GPIO_Digital_Output(@GPIO_PORT_130_137, _GPIO_PINMASK_5)
+    GPIO_OUTPUT_130_137 = 0
+    GPIO_OUTPUT_130_137.B5 = 0
+    Delay_ms(100)
+    GPIO_OUTPUT_130_137.B5 = 1
+    Delay_ms(100)
+    UART1_Init_Advanced( baud, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT )
+    logger = @UART1_Write
+end sub
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+    logger( data_^ )
+end sub
+
+#ENDIF
+
+end.

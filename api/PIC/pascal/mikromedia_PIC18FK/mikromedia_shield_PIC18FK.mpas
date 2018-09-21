@@ -1,0 +1,564 @@
+unit mikromedia_shield_PIC18FK;
+
+uses __t_PIC
+
+    , __mm_PIC18FK_GPIO
+
+{$IFDEF ENABLE_SPI}
+    , __mm_PIC18FK_SPI
+{$ENDIF}
+{$IFDEF ENABLE_I2C}
+    , __mm_PIC18FK_I2C
+{$ENDIF}
+{$IFDEF ENABLE_UART}
+    , __mm_PIC18FK_UART
+{$ENDIF}
+{$IFDEF ENABLE_LOG}
+    , __mm_PIC18FK_LOG
+{$ENDIF}
+    ;
+
+// -------------------------------------------------------- BOARD CONFIGURATION
+
+{$DEFINE __MIKROBUS1}
+{$DEFINE __MIKROBUS2}
+//{$DEFINE __MIKROBUS3}
+//{$DEFINE __MIKROBUS4}
+//{$DEFINE __MIKROBUS5}
+//{$DEFINE __MIKROBUS6}
+
+{$DEFINE __LOG_USBUART}
+//{$DEFINE __LOG_USBUART_A}
+//{$DEFINE __LOG_USBUART_B}
+
+// ---------------------------------------------------------- PERIPHERALS SETUP
+
+{$IFDEF ENABLE_SPI}
+
+const _MIKROBUS1_SPI : T_spi_obj = (
+
+    @SPI1_Write, 
+    @SPI1_Read
+);
+
+const _MIKROBUS2_SPI : T_spi_obj = (
+
+    @SPI1_Write, 
+    @SPI1_Read
+);
+
+{$ENDIF}
+{$IFDEF ENABLE_I2C}
+
+const _MIKROBUS1_I2C : T_i2c_obj = (
+
+    @I2C2_Start, 
+    @I2C2_Stop, 
+    @I2C2_Repeated_Start, 
+    @I2C2_Wr, 
+    @I2C2_Rd
+);
+
+const _MIKROBUS2_I2C : T_i2c_obj = (
+
+    @I2C2_Start, 
+    @I2C2_Stop, 
+    @I2C2_Repeated_Start, 
+    @I2C2_Wr, 
+    @I2C2_Rd
+);
+
+{$ENDIF}
+{$IFDEF ENABLE_UART}
+
+const _MIKROBUS1_UART : T_uart_obj = 
+(
+    @UART2_Remappable_Write, 
+    @UART2_Remappable_Read, 
+    @UART2_Remappable_Data_Ready
+);
+
+const _MIKROBUS2_UART : T_uart_obj = 
+(
+    @UART2_Remappable_Write, 
+    @UART2_Remappable_Read, 
+    @UART2_Remappable_Data_Ready
+);
+
+{$ENDIF}
+
+// -------------------------------------------------------------------------- //
+//
+//                        DO NOT EDIT THE REST OF CONTENT
+//
+//                            COMMON BOARD DEF FORMAT
+//
+// -------------------------------------------------------------------------- //
+
+const _GPIO_INPUT        : byte = 1;
+const _GPIO_OUTPUT       : byte = 0;
+
+const _MIKROBUS_AN_PIN   : byte = 0;
+const _MIKROBUS_RST_PIN  : byte = 1;
+const _MIKROBUS_CS_PIN   : byte = 2;
+const _MIKROBUS_SCK_PIN  : byte = 3;
+const _MIKROBUS_MISO_PIN : byte = 4;
+const _MIKROBUS_MOSI_PIN : byte = 5;
+const _MIKROBUS_PWM_PIN  : byte = 6;
+const _MIKROBUS_INT_PIN  : byte = 7;
+const _MIKROBUS_RX_PIN   : byte = 8;
+const _MIKROBUS_TX_PIN   : byte = 9;
+const _MIKROBUS_SCL_PIN  : byte = 10;
+const _MIKROBUS_SDA_PIN  : byte = 11;
+
+const _MIKROBUS_OK       : byte = 0;
+const _MIKROBUS_ERR_BUS  : byte = 1;
+const _MIKROBUS_ERR_PIN  : byte = 2;
+const _MIKROBUS_ERR_SPI  : byte = 3;
+const _MIKROBUS_ERR_I2C  : byte = 4;
+const _MIKROBUS_ERR_UART : byte = 5;
+const _MIKROBUS_ERR_LOG  : byte = 6;
+
+// ----------------------------------------------------------------- CONSTANTS /
+
+{$IFDEF __MIKROBUS1}
+const _MIKROBUS1 : byte = 0;
+
+const _MIKROBUS1_GPIO : T_gpio_obj =
+(
+    (
+        @_setAN_1, @_setRST_1, @_setCS_1, @_setSCK_1, @_setMISO_1, @_setMOSI_1,
+        @_setPWM_1, @_setINT_1, @_setRX_1, @_setTX_1, @_setSCL_1, @_setSDA_1
+    ),
+    (
+        @_getAN_1, @_getRST_1, @_getCS_1, @_getSCK_1, @_getMISO_1, @_getMOSI_1,
+        @_getPWM_1, @_getINT_1, @_getRX_1, @_getTX_1, @_getSCL_1, @_getSDA_1
+    )
+);
+{$ENDIF}
+{$IFDEF __MIKROBUS2}
+const _MIKROBUS2 : byte = 1;
+
+const _MIKROBUS2_GPIO : T_gpio_obj =
+(
+    (
+        @_setAN_2, @_setRST_2, @_setCS_2, @_setSCK_2, @_setMISO_2, @_setMOSI_2,
+        @_setPWM_2, @_setINT_2, @_setRX_2, @_setTX_2, @_setSCL_2, @_setSDA_2
+    ),
+    (
+        @_getAN_2, @_getRST_2, @_getCS_2, @_getSCK_2, @_getMISO_2, @_getMOSI_2,
+        @_getPWM_2, @_getINT_2, @_getRX_2, @_getTX_2, @_getSCL_2, @_getSDA_2
+    )
+);
+{$ENDIF}
+{$IFDEF __MIKROBUS3}
+const _MIKROBUS3 : byte = 2;
+
+const _MIKROBUS3_GPIO : T_gpio_obj =
+(
+    (
+        @_setAN_3, @_setRST_3, @_setCS_3, @_setSCK_3, @_setMISO_3, @_setMOSI_3,
+        @_setPWM_3, @_setINT_3, @_setRX_3, @_setTX_3, @_setSCL_3, @_setSDA_3
+    ),
+    (
+        @_getAN_3, @_getRST_3, @_getCS_3, @_getSCK_3, @_getMISO_3, @_getMOSI_3,
+        @_getPWM_3, @_getINT_3, @_getRX_3, @_getTX_3, @_getSCL_3, @_getSDA_3
+    )
+);
+{$ENDIF}
+{$IFDEF __MIKROBUS4}
+const _MIKROBUS4 : byte = 3;
+
+const _MIKROBUS4_GPIO : T_gpio_obj = (
+    (
+        @_setAN_4, @_setRST_4, @_setCS_4, @_setSCK_4, @_setMISO_4, @_setMOSI_4,
+        @_setPWM_4, @_setINT_4, @_setRX_4, @_setTX_4, @_setSCL_4, @_setSDA_4
+    ),
+    (
+        @_getAN_4, @_getRST_4, @_getCS_4, @_getSCK_4, @_getMISO_4, @_getMOSI_4,
+        @_getPWM_4, @_getINT_4, @_getRX_4, @_getTX_4, @_getSCL_4, @_getSDA_4
+    )
+);
+{$ENDIF}
+{$IFDEF __MIKROBUS5}
+const _MIKROBUS5 : byte = 4;
+
+const _MIKROBUS5_GPIO : T_gpio_obj = (
+    (
+        @_setAN_5, @_setRST_5, @_setCS_5, @_setSCK_5, @_setMISO_5, @_setMOSI_5,
+        @_setPWM_5, @_setINT_5, @_setRX_5, @_setTX_5, @_setSCL_5, @_setSDA_5
+    ),
+    (
+        @_getAN_5, @_getRST_5, @_getCS_5, @_getSCK_5, @_getMISO_5, @_getMOSI_5,
+        @_getPWM_5, @_getINT_5, @_getRX_5, @_getTX_5, @_getSCL_5, @_getSDA_5
+    )
+);
+{$ENDIF}
+{$IFDEF __MIKROBUS6}
+const _MIKROBUS6 : byte = 5;
+
+const _MIKROBUS6_GPIO : T_gpio_obj = (
+    (
+        @_setAN_6, @_setRST_6, @_setCS_6, @_setSCK_6, @_setMISO_6, @_setMOSI_6,
+        @_setPWM_6, @_setINT_6, @_setRX_6, @_setTX_6, @_setSCL_6, @_setSDA_6
+    ),
+    (
+        @_getAN_6, @_getRST_6, @_getCS_6, @_getSCK_6, @_getMISO_6, @_getMOSI_6,
+        @_getPWM_6, @_getINT_6, @_getRX_6, @_getTX_6, @_getSCL_6, @_getSDA_6
+    )
+);
+{$ENDIF}
+
+{$IFDEF ENABLE_LOG}
+
+const _LOG_BYTE  : byte = 1;
+const _LOG_TEXT  : byte = 2;
+const _LOG_LINE  : byte = 3;
+
+{$IFDEF __LOG_USBUART}
+
+const _LOG_USBUART   : byte = 0x10;
+
+{$ENDIF}
+{$IFDEF __LOG_USBUART_A}
+
+const _LOG_USBUART_A : byte = 0x20;
+
+{$ENDIF}
+{$IFDEF __LOG_USBUART_B}
+
+const _LOG_USBUART_B : byte = 0x30;
+
+{$ENDIF}
+{$ENDIF}
+
+// ---------------------------------------------------------------- PROTOTYPES /
+
+function mikrobus_gpioInit(bus: T_mikrobus_soc; pin: T_mikrobus_pin; direction: T_gpio_dir) : T_mikrobus_ret;
+
+{$IFDEF ENABLE_SPI}
+
+function mikrobus_spiInit(bus: T_mikrobus_soc; cfg: ^const uint32_t) : T_mikrobus_ret;
+
+{$ENDIF}
+{$IFDEF ENABLE_I2C}
+
+function mikrobus_i2cinit(bus: T_mikrobus_soc; cfg: ^const uint32_t) : T_mikrobus_ret;
+
+{$ENDIF}
+{$IFDEF ENABLE_UART}
+
+function mikrobus_uartInit(bus: T_mikrobus_soc; cfg: ^const uint32_t) : T_mikrobus_ret;
+
+{$ENDIF}
+{$IFDEF ENABLE_LOG}
+
+function mikrobus_logInit(port: T_log_bus; const baud: uint32_t) : T_mikrobus_ret;
+function mikrobus_logWrite(var uart_text : string; format: T_log_format) : T_mikrobus_ret;
+
+{$ENDIF}
+
+implementation
+
+// ---------------------------------------------------------- PUBLIC FUNCTIONS /
+
+function mikrobus_gpioInit(bus: T_mikrobus_soc; pin: T_mikrobus_pin; direction: T_gpio_dir) : T_mikrobus_ret;
+begin
+    case bus of
+{$IFDEF __MIKROBUS1}
+        _MIKROBUS1 :
+        begin
+            Result := _gpioInit_1( pin, direction );
+{$ENDIF}
+{$IFDEF __MIKROBUS2}
+        end;
+        _MIKROBUS2 :
+        begin
+            Result := _gpioInit_1( pin, direction );
+{$ENDIF}
+{$IFDEF __MIKROBUS3}
+        end;
+        _MIKROBUS3 :
+        begin
+            Result := _gpioInit_1( pin, direction );
+{$ENDIF}
+{$IFDEF __MIKROBUS4}
+        end;
+        _MIKROBUS4 :
+        begin
+            Result := _gpioInit_1( pin, direction );
+{$ENDIF}
+{$IFDEF __MIKROBUS5}
+        end;
+        _MIKROBUS5 :
+        begin
+            Result := _gpioInit_1( pin, direction );
+{$ENDIF}
+{$IFDEF __MIKROBUS6}
+        end;
+        _MIKROBUS6 :
+        begin
+            Result := _gpioInit_1( pin, direction );
+{$ENDIF}
+        end
+    else
+        Result := _MIKROBUS_ERR_BUS;
+    end;
+end;
+
+{$IFDEF ENABLE_SPI}
+
+function mikrobus_spiInit(bus: T_mikrobus_soc; cfg: ^const uint32_t) : T_mikrobus_ret;
+begin
+    Result := _MIKROBUS_OK;
+    case bus of
+{$IFDEF __MIKROBUS1}
+        _MIKROBUS1 :
+        begin
+            Result := _spiInit_1( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS2}
+        end;
+        _MIKROBUS2 :
+        begin
+            Result := _spiInit_2( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS3}
+        end;
+        _MIKROBUS3 :
+        begin
+            Result := _spiInit_3( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS4}
+        end;
+        _MIKROBUS4 :
+        begin
+            Result := _spiInit_4( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS5}
+        end;
+        _MIKROBUS5 :
+        begin
+            Result := _spiInit_5( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS6}
+        end;
+        _MIKROBUS6 :
+        begin
+            Result := _spiInit_6( cfg );
+{$ENDIF}
+        end
+    else
+        Result := _MIKROBUS_ERR_BUS;
+    end;
+end;
+
+{$ENDIF}
+{$IFDEF ENABLE_I2C}
+
+function mikrobus_i2cinit(bus: T_mikrobus_soc; cfg: ^const uint32_t) : T_mikrobus_ret;
+begin
+    Result := _MIKROBUS_OK;
+
+
+    case bus of
+{$IFDEF __MIKROBUS1}
+        _MIKROBUS1 :
+        begin
+            Result := _i2cInit_1( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS2}
+        end;
+        _MIKROBUS2 :
+        begin
+            Result := _i2cInit_2( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS3}
+        end;
+        _MIKROBUS3 :
+        begin
+            Result := _i2cInit_3( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS4}
+        end;
+        _MIKROBUS4 :
+        begin
+            Result := _i2cInit_4( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS5}
+        end;
+        _MIKROBUS5 :
+        begin
+            Result := _i2cInit_5( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS6}
+        end;
+        _MIKROBUS6 :
+        begin
+            Result := _i2cInit_6( cfg );
+{$ENDIF}
+        end
+    else
+        Result := _MIKROBUS_ERR_BUS;
+    end;
+end;
+
+{$ENDIF}
+{$IFDEF ENABLE_UART}
+
+function mikrobus_uartInit(bus: T_mikrobus_soc; cfg: ^const uint32_t) : T_mikrobus_ret;
+begin
+    Result := _MIKROBUS_OK;
+
+
+    case bus of
+{$IFDEF __MIKROBUS1}
+        _MIKROBUS1 :
+        begin
+            Result := _uartInit_1( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS2}
+        end;
+        _MIKROBUS2 :
+        begin
+            Result := _uartInit_2( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS3}
+        end;
+        _MIKROBUS3 :
+        begin
+            Result := _uartInit_3( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS4}
+        end;
+        _MIKROBUS4 :
+        begin
+            Result := _uartInit_4( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS5}
+        end;
+        _MIKROBUS5 :
+        begin
+            Result := _uartInit_5( cfg );
+{$ENDIF}
+{$IFDEF __MIKROBUS6}
+        end;
+        _MIKROBUS6 :
+        begin
+            Result := _uartInit_6( cfg );
+{$ENDIF}
+        end
+    else
+        Result := _MIKROBUS_ERR_BUS;
+    end;
+end;
+
+{$ENDIF}
+{$IFDEF ENABLE_LOG}
+
+function mikrobus_logInit(port: T_log_bus; const baud: uint32_t) : T_mikrobus_ret;
+begin
+
+    Result := _MIKROBUS_OK;
+
+    case port of
+{$IFDEF __MIKROBUS1}
+        _MIKROBUS1 :
+        begin
+            Result := _log_init1( baud );
+{$ENDIF}
+{$IFDEF __MIKROBUS2}
+        end;
+        _MIKROBUS2 :
+        begin
+            Result := _log_init2( baud );
+{$ENDIF}
+{$IFDEF __MIKROBUS3}
+        end;
+        _MIKROBUS3 :
+        begin
+            Result := _log_init3( baud );
+{$ENDIF}
+{$IFDEF __MIKROBUS4}
+        end;
+        _MIKROBUS4 :
+        begin
+            Result := _log_init4( baud );
+{$ENDIF}
+{$IFDEF __MIKROBUS5}
+        end;
+        _MIKROBUS5 :
+        begin
+            Result := _log_init5( baud );
+{$ENDIF}
+{$IFDEF __MIKROBUS6}
+        end;
+        _MIKROBUS6 :
+        begin
+            Result := _log_init6( baud );
+{$ENDIF}
+{$IFDEF __LOG_USBUART}
+        end;
+        _LOG_USBUART :
+        begin
+            Result := _log_initUart( baud );
+{$ENDIF}
+{$IFDEF __LOG_USBUART_A}
+        end;
+        _LOG_USBUART_A :
+        begin
+            Result := _log_initUartA( baud );
+{$ENDIF}
+{$IFDEF __LOG_USBUART_B}
+        end;
+        _LOG_USBUART_B :
+        begin
+            Result := _log_initUartB( baud )
+{$ENDIF}
+        end
+    else
+        Result := _MIKROBUS_ERR_BUS;
+    end;
+end;
+
+function mikrobus_logWrite(var uart_text : string; format: T_log_format) : T_mikrobus_ret;
+var endr, endl : byte;
+var ptr: ^uint8_t;
+var counter: uint16_t;
+begin
+Result := 0;
+    endr := 13;
+    endl := 10;
+    ptr := @uart_text;
+    counter := 0;
+
+    case format of
+        _LOG_BYTE :
+            _log_write( ptr );
+        _LOG_TEXT :
+        begin
+            while ptr^ > 0 do
+            begin
+                _log_write( ptr );
+                counter := counter + 1;
+                ptr := @uart_text + counter;
+            end;
+        end;
+        _LOG_LINE :
+        begin
+            while ptr^ > 0 do
+            begin
+                _log_write( ptr );
+                counter := counter + 1;
+                ptr := @uart_text + counter;
+            end;
+            _log_write( @endr );
+            _log_write( @endl );
+        end
+        else Result := _MIKROBUS_ERR_LOG;
+    end;
+end;
+
+{$ENDIF}
+
+end.

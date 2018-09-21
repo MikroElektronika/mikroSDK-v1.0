@@ -1,0 +1,26 @@
+module __c_KINETIS_SPI
+include __t_KINETIS
+
+#IFDEF ENABLE_SPI THEN
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret       
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_SPI          as byte = 3
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_SPI THEN
+
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret
+dim arg1, arg2 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)     
+    SPI0_Init_Advanced( longword(arg1^), longword(arg2^), @_GPIO_Module_SPI0_PC5_7_6 )
+    Result = 0   
+end sub
+
+#ENDIF
+
+end.

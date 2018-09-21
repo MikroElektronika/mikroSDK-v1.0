@@ -1,0 +1,41 @@
+module __c_PIC_UART
+include __t_PIC
+
+#IFDEF ENABLE_UART THEN
+
+sub function _uartInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret    
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_UART          as byte = 5
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_UART THEN
+
+sub function _uartInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1 as ^const uint32_t
+
+    Unlock_IOLOCK()
+    PPS_Mapping_NoLock(22, _INPUT, _RX2_DT2)
+    PPS_Mapping_NoLock(23, _OUTPUT, _TX2_CK2)
+    Lock_IOLOCK()
+    
+    arg1 = (cfg + 0)
+    Result = 0
+    select case (arg1^)
+        case 4800   UART_Remappable_Init( 4800 )
+        case 9600   UART_Remappable_Init( 9600 )
+        case 19200  UART_Remappable_Init( 19200 )
+        case 38400  UART_Remappable_Init( 38400 )
+        case 57600  UART_Remappable_Init( 57600 )
+        case 115200 UART_Remappable_Init( 115200 )
+        case else   UART_Remappable_Init( 9600 )
+    end select
+end sub
+
+#ENDIF
+
+end.

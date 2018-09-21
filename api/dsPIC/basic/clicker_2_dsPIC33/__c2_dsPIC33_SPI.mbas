@@ -1,0 +1,53 @@
+module __c2_dsPIC33_SPI
+include __t_DSPIC
+
+#IFDEF ENABLE_SPI THEN
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret 
+sub function _spiInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret      
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_SPI          as byte = 3
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_SPI THEN
+
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8 as ^const uint32_t
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    arg4 = (cfg + 3)
+    arg5 = (cfg + 4)
+    arg6 = (cfg + 5)
+    arg7 = (cfg + 6)
+    arg8 = (cfg + 7)
+	PPS_Mapping(109, _OUTPUT, _SDO3)
+    PPS_Mapping(17, _INPUT, _SDI3)
+    PPS_Mapping(108, _OUTPUT, _SCK3OUT)
+    SPI3_Init_Advanced(word(arg1^), word(arg2^), word(arg3^), word(arg4^), word(arg5^), word(arg6^), word(arg7^), word(arg7^))
+    Result = 0
+end sub
+
+sub function _spiInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8 as ^const uint32_t
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    arg4 = (cfg + 3)
+    arg5 = (cfg + 4)
+    arg6 = (cfg + 5)
+    arg7 = (cfg + 6)
+    arg8 = (cfg + 7)
+	PPS_Mapping(109, _OUTPUT, _SDO3)
+    PPS_Mapping(17, _INPUT, _SDI3)
+    PPS_Mapping(108, _OUTPUT, _SCK3OUT)
+    SPI3_Init_Advanced(word(arg1^), word(arg2^), word(arg3^), word(arg4^), word(arg5^), word(arg6^), word(arg7^), word(arg7^))
+    Result = 0
+end sub
+
+#ENDIF
+
+end.

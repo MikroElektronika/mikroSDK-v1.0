@@ -1,0 +1,56 @@
+unit __em_C129_LOG;
+uses __t_TIVA;
+
+{$IFDEF ENABLE_LOG}
+function _log_init1(baud: uint32_t) : T_mikrobus_ret;
+function _log_init2(baud: uint32_t) : T_mikrobus_ret;
+function _log_initUartA(baud: uint32_t) : T_mikrobus_ret;
+function _log_initUartB(baud: uint32_t) : T_mikrobus_ret;   
+
+procedure _log_write(data_: ^uint8_t);
+{$ENDIF}
+
+implementation
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_LOG}
+
+var logger : ^T_log_writeFp;
+
+function _log_init1(baud: uint32_t) : T_mikrobus_ret;
+begin
+Result := 0;
+    UART5_Init(baud);
+    logger := @UART5_Write;
+end;
+
+function _log_init2(baud: uint32_t) : T_mikrobus_ret;
+begin
+Result := 0;
+    UART7_Init(baud);
+    logger := @UART7_Write;
+end;
+
+function _log_initUartA(baud: uint32_t) : T_mikrobus_ret;
+begin
+Result := 0;
+    UART2_Init(baud);
+    logger := @UART2_Write;
+end;
+
+function _log_initUartB(baud: uint32_t) : T_mikrobus_ret;
+begin
+Result := 0;
+    UART7_Init(baud);
+    logger := @UART7_Write;
+end;
+
+procedure _log_write(data_: ^uint8_t);
+begin
+    logger( data_^ );
+end;
+
+{$ENDIF}
+
+end.
