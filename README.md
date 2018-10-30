@@ -1,4 +1,8 @@
-![MikroE](https://download.mikroe.com/images/image-testing/mikrosdk-logo-new-2a-inside-image-latest.png)
+# mikroSDK
+
+---
+
+- [mikroSDK](https://www.mikroe.com/mikrosdk) 
 
 ---
 
@@ -9,11 +13,12 @@
 
 ---
 
-**mikroBUS API** layer as part of [mikroSDK](https://www.mikroe.com/mikrosdk) 
-currently covers almost all [mikroE development systems](https://www.mikroe.com/development-boards). 
+- **mikroBUS API** currently covers almost all [mikroE development systems](https://www.mikroe.com/development-boards). 
+- **mikroSDK HAL** currently covers all [mikroC compilers](https://www.mikroe.com/compilers).
 
-This API can be also found on [Libstock](https://libstock.mikroe.com/projects/view/2249/mikrosdk)
-in form of **.mpkg** file for [mikroE compilers](https://www.mikroe.com/compilers).
+---
+
+mikroBUS API can be also found on [Libstock](https://libstock.mikroe.com/projects/view/2249/mikrosdk) in form of **.mpkg** file for mikroE compilers while mikroSDK HAL is provided in binary format also on Libstock with each click board package.
 
 ---
 
