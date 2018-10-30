@@ -1,0 +1,35 @@
+unit __epf_33EP512MU810_I2C;
+uses __t_DSPIC;
+
+{$IFDEF ENABLE_I2C}
+function _i2cInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _i2cInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_I2C  : byte = 4;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_I2C}
+
+function _i2cInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+    arg1 := (cfg + 0);
+    I2C2_Init(longint(arg1^));
+    Result := 0;
+end;
+
+function _i2cInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+    arg1 := (cfg + 0);
+    I2C2_Init(longint(arg1^));
+    Result := 0;
+end;
+
+{$ENDIF}
+
+end.

@@ -1,0 +1,47 @@
+unit __c2_PIC32MX_SPI;
+uses __t_PIC32;
+
+{$IFDEF ENABLE_SPI}
+function _spiInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _spiInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_SPI  : byte = 3;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_SPI}
+
+function _spiInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3, arg4, arg5, arg6, arg7 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    arg4 := (cfg + 3);
+    arg5 := (cfg + 4);
+    arg6 := (cfg + 5);
+    arg7 := (cfg + 6);
+    SPI2_Init_Advanced(word(arg1^), word(arg2^), word(arg3^), word(arg4^), word(arg5^), word(arg6^), word(arg7^));
+end;
+
+function _spiInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3, arg4, arg5, arg6, arg7 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    arg4 := (cfg + 3);
+    arg5 := (cfg + 4);
+    arg6 := (cfg + 5);
+    arg7 := (cfg + 6);
+    SPI2_Init_Advanced(word(arg1^), word(arg2^), word(arg3^), word(arg4^), word(arg5^), word(arg6^), word(arg7^));
+end;
+
+{$ENDIF}
+
+end.

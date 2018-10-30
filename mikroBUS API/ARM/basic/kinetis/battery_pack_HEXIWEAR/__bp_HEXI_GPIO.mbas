@@ -1,0 +1,98 @@
+module __bp_HEXI_GPIO
+include __t_KINETIS 
+
+sub function _getAN_1  () as uint8_t
+sub function _getRST_1 () as uint8_t
+sub function _getCS_1  () as uint8_t
+sub function _getSCK_1 () as uint8_t
+sub function _getMISO_1() as uint8_t
+sub function _getMOSI_1() as uint8_t
+sub function _getPWM_1 () as uint8_t
+sub function _getINT_1 () as uint8_t
+sub function _getRX_1  () as uint8_t
+sub function _getTX_1  () as uint8_t
+sub function _getSCL_1 () as uint8_t
+sub function _getSDA_1 () as uint8_t
+sub procedure _setAN_1  (dim state as uint8_t)
+sub procedure _setRST_1 (dim state as uint8_t)
+sub procedure _setCS_1  (dim state as uint8_t)
+sub procedure _setSCK_1 (dim state as uint8_t)
+sub procedure _setMISO_1(dim state as uint8_t)
+sub procedure _setMOSI_1(dim state as uint8_t)
+sub procedure _setPWM_1 (dim state as uint8_t)
+sub procedure _setINT_1 (dim state as uint8_t)
+sub procedure _setRX_1  (dim state as uint8_t)
+sub procedure _setTX_1  (dim state as uint8_t)
+sub procedure _setSCL_1 (dim state as uint8_t)
+sub procedure _setSDA_1 (dim state as uint8_t)
+
+sub function _gpioInit_1(dim pin as T_mikrobus_pin, dim direction as T_gpio_dir) as T_mikrobus_ret
+
+implements
+
+const _MIKROBUS_ERR_PIN          as byte = 2
+
+const _GPIO_INPUT                as byte = 0
+const _GPIO_OUTPUT               as byte = 1
+
+const _MIKROBUS_AN_PIN           as byte = 0
+const _MIKROBUS_RST_PIN          as byte = 1
+const _MIKROBUS_CS_PIN           as byte = 2
+const _MIKROBUS_SCK_PIN          as byte = 3
+const _MIKROBUS_MISO_PIN         as byte = 4
+const _MIKROBUS_MOSI_PIN         as byte = 5
+const _MIKROBUS_PWM_PIN          as byte = 6
+const _MIKROBUS_INT_PIN          as byte = 7
+const _MIKROBUS_RX_PIN           as byte = 8
+const _MIKROBUS_TX_PIN           as byte = 9
+const _MIKROBUS_SCL_PIN          as byte = 10
+const _MIKROBUS_SDA_PIN          as byte = 11
+
+sub function _getAN_1  () as uint8_t Result = PTB_PDIR.B2  end sub
+sub function _getRST_1 () as uint8_t Result = PTB_PDIR.B11 end sub
+sub function _getCS_1  () as uint8_t Result = PTC_PDIR.B4  end sub
+sub function _getSCK_1 () as uint8_t Result = PTC_PDIR.B5  end sub
+sub function _getMISO_1() as uint8_t Result = PTC_PDIR.B7  end sub
+sub function _getMOSI_1() as uint8_t Result = PTC_PDIR.B6  end sub
+sub function _getPWM_1 () as uint8_t Result = PTA_PDIR.B10 end sub
+sub function _getINT_1 () as uint8_t Result = PTB_PDIR.B13 end sub
+sub function _getRX_1  () as uint8_t Result = PTD_PDIR.B2  end sub
+sub function _getTX_1  () as uint8_t Result = PTD_PDIR.B3  end sub
+sub function _getSCL_1 () as uint8_t Result = PTD_PDIR.B8  end sub
+sub function _getSDA_1 () as uint8_t Result = PTD_PDIR.B9  end sub
+sub procedure _setAN_1  (dim state as uint8_t) PTB_PDOR.B2  = state end sub
+sub procedure _setRST_1 (dim state as uint8_t) PTB_PDOR.B11 = state end sub
+sub procedure _setCS_1  (dim state as uint8_t) PTC_PDOR.B4  = state end sub
+sub procedure _setSCK_1 (dim state as uint8_t) PTC_PDOR.B5  = state end sub
+sub procedure _setMISO_1(dim state as uint8_t) PTC_PDOR.B7  = state end sub
+sub procedure _setMOSI_1(dim state as uint8_t) PTC_PDOR.B6  = state end sub
+sub procedure _setPWM_1 (dim state as uint8_t) PTA_PDOR.B10 = state end sub
+sub procedure _setINT_1 (dim state as uint8_t) PTB_PDOR.B13 = state end sub
+sub procedure _setRX_1  (dim state as uint8_t) PTD_PDOR.B2  = state end sub
+sub procedure _setTX_1  (dim state as uint8_t) PTD_PDOR.B3  = state end sub
+sub procedure _setSCL_1 (dim state as uint8_t) PTD_PDOR.B8  = state end sub
+sub procedure _setSDA_1 (dim state as uint8_t) PTD_PDOR.B9  = state end sub
+
+
+sub function _gpioInit_1(dim pin as T_mikrobus_pin, dim direction as T_gpio_dir) as T_mikrobus_ret
+
+Result = 0
+    select case pin
+                case _MIKROBUS_AN_PIN    if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTB_PDIR, _GPIO_PINMASK_2)  else GPIO_Digital_Output(@PTB_PDOR, _GPIO_PINMASK_2)  end if
+                case _MIKROBUS_RST_PIN   if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTB_PDIR, _GPIO_PINMASK_11) else GPIO_Digital_Output(@PTB_PDOR, _GPIO_PINMASK_11) end if
+                case _MIKROBUS_CS_PIN    if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTC_PDIR, _GPIO_PINMASK_4)  else GPIO_Digital_Output(@PTC_PDOR, _GPIO_PINMASK_4)  end if
+                case _MIKROBUS_SCK_PIN   if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTC_PDIR, _GPIO_PINMASK_5)  else GPIO_Digital_Output(@PTC_PDOR, _GPIO_PINMASK_5)  end if
+                case _MIKROBUS_MISO_PIN  if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTC_PDIR, _GPIO_PINMASK_7)  else GPIO_Digital_Output(@PTC_PDOR, _GPIO_PINMASK_7)  end if
+                case _MIKROBUS_MOSI_PIN  if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTC_PDIR, _GPIO_PINMASK_6)  else GPIO_Digital_Output(@PTC_PDOR, _GPIO_PINMASK_6)  end if
+                case _MIKROBUS_PWM_PIN   if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTA_PDIR, _GPIO_PINMASK_10) else GPIO_Digital_Output(@PTA_PDOR, _GPIO_PINMASK_10) end if
+                case _MIKROBUS_INT_PIN   if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTB_PDIR, _GPIO_PINMASK_13) else GPIO_Digital_Output(@PTB_PDOR, _GPIO_PINMASK_13) end if
+                case _MIKROBUS_RX_PIN    if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTD_PDIR, _GPIO_PINMASK_2)  else GPIO_Digital_Output(@PTD_PDOR, _GPIO_PINMASK_2)  end if
+                case _MIKROBUS_TX_PIN    if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTD_PDIR, _GPIO_PINMASK_3)  else GPIO_Digital_Output(@PTD_PDOR, _GPIO_PINMASK_3)  end if
+                case _MIKROBUS_SCL_PIN   if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTD_PDIR, _GPIO_PINMASK_8)  else GPIO_Digital_Output(@PTD_PDOR, _GPIO_PINMASK_8)  end if
+                case _MIKROBUS_SDA_PIN   if (direction = _GPIO_INPUT) then GPIO_Digital_Input(@PTD_PDIR, _GPIO_PINMASK_9)  else GPIO_Digital_Output(@PTD_PDOR, _GPIO_PINMASK_9)  end if
+        case else Result = _MIKROBUS_ERR_PIN
+    end select
+end sub
+
+
+end.

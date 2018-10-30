@@ -1,0 +1,64 @@
+unit __epf_33EP512MU810_LOG;
+uses __t_DSPIC;
+
+{$IFDEF ENABLE_LOG}
+function _log_init1(baud: uint32_t) : T_mikrobus_ret;
+function _log_init2(baud: uint32_t) : T_mikrobus_ret;
+function _log_initUartA(baud: uint32_t) : T_mikrobus_ret;
+function _log_initUartB(baud: uint32_t) : T_mikrobus_ret;
+    
+procedure _log_write(data_: ^uint8_t);
+{$ENDIF}
+
+implementation
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_LOG}
+
+var logger : ^T_log_writeFp;
+
+function _log_init1(baud: uint32_t) : T_mikrobus_ret;
+begin
+    PPS_Mapping(100, _INPUT,  _U1RX);
+    PPS_Mapping(101, _OUTPUT, _U1TX);
+    UART1_Init(baud);
+    logger := @UART1_Write;
+Result := 0;	
+end;
+
+function _log_init2(baud: uint32_t) : T_mikrobus_ret;
+begin
+    PPS_Mapping(108, _INPUT,  _U2RX);
+    PPS_Mapping(109, _OUTPUT, _U2TX);
+    UART2_Init(baud);
+    logger := @UART2_Write;
+Result := 0;	
+end;
+
+function _log_initUartA(baud: uint32_t): T_mikrobus_ret;
+begin
+    PPS_Mapping(100, _INPUT,  _U1RX);
+    PPS_Mapping(101, _OUTPUT, _U1TX);
+    UART1_Init(baud);
+    logger := @UART1_Write;
+Result := 0;		
+end;
+
+function _log_initUartB(baud: uint32_t): T_mikrobus_ret;
+begin
+    PPS_Mapping(108, _INPUT,  _U2RX);
+    PPS_Mapping(109, _OUTPUT, _U2TX);
+    UART2_Init(baud);
+    logger := @UART2_Write;
+Result := 0;		
+end;
+
+procedure _log_write(data_: ^uint8_t);
+begin
+    logger( data_^ );
+end;
+
+{$ENDIF}
+
+end.

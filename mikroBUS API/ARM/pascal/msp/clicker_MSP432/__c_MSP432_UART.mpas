@@ -1,0 +1,26 @@
+unit __c_MSP432_UART;
+uses __t_MSP432;
+
+{$IFDEF ENABLE_UART}
+function _uartInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_UART : byte = 5;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_UART}
+
+function _uartInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1 : ^const uint32_t;
+begin
+    arg1 := (cfg + 0);
+    Result := 0;
+    UART2_Init( dword(arg1^) );
+end;
+
+{$ENDIF}
+
+end.

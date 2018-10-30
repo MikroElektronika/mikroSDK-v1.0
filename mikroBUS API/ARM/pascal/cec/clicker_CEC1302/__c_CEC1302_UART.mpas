@@ -1,0 +1,34 @@
+unit __c_CEC1302_UART;
+uses __t_CEC;
+
+{$IFDEF ENABLE_UART}
+function _uartInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_UART : byte = 5;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_UART}
+
+function _uartInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3, arg4 : ^const uint32_t;
+begin
+Result := 0;
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    arg4 := (cfg + 3);
+    UART1_Init_Advanced( dword(arg1^), word(arg2^), word(arg3^), word(arg4^) );
+    if UART1_Data_Ready() then
+    begin
+       UART1_Write(0);
+       UART1_Read();
+    end;
+end;
+
+{$ENDIF}
+
+end.

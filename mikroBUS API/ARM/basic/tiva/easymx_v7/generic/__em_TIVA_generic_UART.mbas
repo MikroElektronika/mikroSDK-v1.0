@@ -1,0 +1,50 @@
+module __em_TIVA_generic_UART
+include __t_TIVA
+
+#IFDEF ENABLE_UART THEN
+
+sub function _uartInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+sub function _uartInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_UART          as byte = 5
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_UART THEN
+sub function _uartInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret 
+dim arg1, arg2, arg3, arg4, arg5, arg6 as ^const uint32_t
+    cpu_fq as longword
+
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    arg4 = (cfg + 3)
+    arg5 = (cfg + 4)
+    arg6 = (cfg + 5)  
+    cpu_fq = Get_Fosc_kHz()
+    UART5_Init_Advanced(longword(arg1^), cpu_fq, word(arg3^), word(arg4^), word(arg5^), word(arg6^), @_GPIO_MODULE_UART5_C67_AHB)
+    Result = 0   
+end sub
+
+sub function _uartInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret
+dim arg1, arg2, arg3, arg4, arg5, arg6 as ^const uint32_t 
+    cpu_fq as longword
+
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)
+    arg3 = (cfg + 2)
+    arg4 = (cfg + 3)
+    arg5 = (cfg + 4)
+    arg6 = (cfg + 5)    
+    cpu_fq = Get_Fosc_kHz()
+    UART7_Init_Advanced(longword(arg1^), cpu_fq, word(arg3^), word(arg4^), word(arg5^), word(arg6^), @_GPIO_MODULE_UART7_C45_AHB)
+    Result = 0   
+end sub
+
+#ENDIF
+
+end.

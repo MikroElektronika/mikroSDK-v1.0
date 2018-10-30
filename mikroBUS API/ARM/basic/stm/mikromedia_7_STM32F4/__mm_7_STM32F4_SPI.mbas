@@ -1,0 +1,62 @@
+module __mm_7_STM32F4_SPI
+include __t_STM32
+
+#IFDEF ENABLE_SPI THEN
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret 
+sub function _spiInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+sub function _spiInit_3 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+sub function _spiInit_4 (dim cfg as ^const uint32_t) as T_mikrobus_ret     
+sub function _spiInit_5 (dim cfg as ^const uint32_t) as T_mikrobus_ret  
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_SPI          as byte = 3
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_SPI THEN
+
+sub function _spiInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret
+dim arg1, arg2 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)  
+    SPI1_Init_Advanced( byte(arg1^), longword(arg2^), @_GPIO_MODULE_SPI1_PA56_PB5 )
+    Result = 0   
+end sub
+
+sub function _spiInit_2 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)  
+    SPI1_Init_Advanced( byte(arg1^), longword(arg2^), @_GPIO_MODULE_SPI1_PA56_PB5 )
+    Result = 0    
+end sub
+
+sub function _spiInit_3 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)  
+    SPI1_Init_Advanced( byte(arg1^), longword(arg2^), @_GPIO_MODULE_SPI1_PA56_PB5 )
+    Result = 0    
+end sub
+
+sub function _spiInit_4 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)  
+    SPI1_Init_Advanced( byte(arg1^), longword(arg2^), @_GPIO_MODULE_SPI1_PA56_PB5 )
+    Result = 0    
+end sub
+
+sub function _spiInit_5 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1, arg2 as ^const uint32_t 
+    arg1 = (cfg + 0)
+    arg2 = (cfg + 1)  
+    SPI1_Init_Advanced( byte(arg1^), longword(arg2^), @_GPIO_MODULE_SPI1_PA56_PB5 )
+    Result = 0    
+end sub
+
+#ENDIF
+
+end.

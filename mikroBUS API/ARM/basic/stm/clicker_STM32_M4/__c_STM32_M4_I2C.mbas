@@ -1,0 +1,28 @@
+module __c_STM_M4_I2C
+include __t_STM32
+
+#IFDEF ENABLE_I2C THEN
+
+sub function _i2cInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_I2C          as byte = 4
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_I2C THEN
+
+sub function _i2cInit_1 (dim cfg as ^const uint32_t) as T_mikrobus_ret   
+dim arg1 as ^const uint32_t
+    arg1 = (cfg + 0)
+    I2C2_Init_Advanced( longword(arg1^), @_GPIO_MODULE_I2C2_PB10_11)
+    Result = 0   
+end sub
+
+
+#ENDIF
+
+end.

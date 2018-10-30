@@ -1,0 +1,35 @@
+module __c_KINETIS_LOG
+include __t_KINETIS
+
+#IFDEF ENABLE_LOG THEN
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+
+#ENDIF
+
+implements
+
+const _MIKROBUS_ERR_LOG          as byte = 6
+
+' ------------------------------------------------------------ SYSTEM SPECIFIC '
+
+#IFDEF ENABLE_LOG THEN
+
+dim logger as ^T_log_writeFp
+
+sub function _log_init1(dim baud as uint32_t) as T_mikrobus_ret
+    Result = 0 
+    UART0_Init(baud)
+    logger = @UART0_Write
+end sub
+
+sub procedure _log_write(dim data_ as ^uint8_t)
+
+    logger( data_^ )
+end sub
+
+#ENDIF
+
+end.

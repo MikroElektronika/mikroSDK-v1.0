@@ -1,0 +1,49 @@
+unit __em_C129_UART;
+uses __t_TIVA;
+
+{$IFDEF ENABLE_UART}
+function _uartInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+function _uartInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+{$ENDIF}
+
+implementation
+
+const _MIKROBUS_ERR_UART : byte = 5;
+
+// ----------------------------------------------------------- SYSTEM SPECIFIC /
+
+{$IFDEF ENABLE_UART}
+
+function _uartInit_1(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3, arg4, arg5, arg6 : ^const uint32_t; 
+    cpu_fq : dword;
+begin
+Result := 0;
+    cpu_fq := Get_Fosc_kHz();
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    arg4 := (cfg + 3);
+    arg5 := (cfg + 4);
+    arg6 := (cfg + 5);
+    UART5_Init_Advanced(dword(arg1^), cpu_fq, word(arg3^), word(arg4^), word(arg5^), word(arg6^), @_GPIO_MODULE_UART5_C67_AHB );
+end;
+
+function _uartInit_2(cfg: ^const uint32_t) : T_mikrobus_ret;
+var arg1, arg2, arg3, arg4, arg5, arg6 : ^const uint32_t;
+    cpu_fq : dword;
+begin
+Result := 0; 
+    cpu_fq := Get_Fosc_kHz();
+    arg1 := (cfg + 0);
+    arg2 := (cfg + 1);
+    arg3 := (cfg + 2);
+    arg4 := (cfg + 3);
+    arg5 := (cfg + 4);
+    arg6 := (cfg + 5);
+    UART7_Init_Advanced(dword(arg1^), cpu_fq, word(arg3^), word(arg4^), word(arg5^), word(arg6^), @_GPIO_MODULE_UART7_C45_AHB );
+end;
+
+{$ENDIF}
+
+end.
