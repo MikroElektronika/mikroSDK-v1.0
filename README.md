@@ -1,7 +1,5 @@
 # mikroSDK
 
----
-
 - [mikroSDK](https://www.mikroe.com/mikrosdk) 
 
 ---
